@@ -102,6 +102,24 @@ Categorised hauliers into core, watchlist, or high-risk allocations based on ris
 =IF(E2>=4, "REQUIRES BACKUP - HIGH RISK", IF(E2>=3, "WATCHLIST", "CORE ALLOCATION"))
 ```
 
+---
 
+### Chunk 6: Recommendations & How to Use the Project
+
+```markdown
+## Procurement Recommendations
+
+1. **Cap Allocations to High-Risk Hauliers**: Freeze discretionary allocations to `CAR-04` and `CAR-07` due to sub-90% punctuality and elevated risk ratings.
+2. **Re-Tender Backup Capacity**: Launch a targeted mini-tender across vulnerable corridors (particularly DACH-to-Italy and cross-channel lanes) to secure reliable fallback hauliers at lower premium deltas.
+3. **Expand Core Carrier Commitments**: Deepen volume commitments with top performers (`CAR-08 EuroRoute Expedited` and `CAR-05 Silesia Haulage`) to raise contract coverage from 82% to 90%, avoiding €35,000–€45,000 in quarterly ad-hoc surcharges.
+
+---
+
+## How to Review This Project
+
+1. Open `EU-Road-Freight-Procurement-Review-2026.xlsx`.
+2. Inspect the **Executive_Summary** tab for key performance cards and the carrier allocation overview.
+3. Review the **Rate_Matrix** tab to examine route pricing and market spot variance.
+4. Check the **Daily_Shipment_Log** to view individual shipments and testing formulas.
 
 
