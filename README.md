@@ -37,11 +37,13 @@ The workbook is structured into four interconnected worksheets:
 
 ### Folder & File Hierarchy
 
+```text
 EU-Freight-Procurement-Analysis/
 ├── Executive_Summary    # KPI scorecards, carrier allocation matrix, strategy notes, spend chart
 ├── Daily_Shipment_Log   # 3,500 operational shipments, costs, service performance, disruption tags
 ├── Rate_Matrix          # 90 cross-border routes, contract rates vs spot benchmarks, fallback deltas
 └── Carrier_Master       # Profiles for 8 hauliers, fleet capacity, risk ratings (1-5), status logic
+```
 
 
 ## Project Architecture
