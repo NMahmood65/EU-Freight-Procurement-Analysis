@@ -71,8 +71,10 @@ Enriched raw operational logs with real haulier names:
 =XLOOKUP(G2, Carrier_Master!A:A, Carrier_Master!B:B, "Unknown Carrier")
 ```
 
-### 2. Multi-Criterion Lookups
-Eliminated route ambiguity when searching by city pairs rather than Lane IDs:
+### 2. Multi-Criterion Lookups (Handling Non-Unique Fields)
+While `Lane ID` is the unique primary key across the network, operational inquiries often arrive as separate Origin and Destination fields rather than code identifiers. Searching solely by country codes (`DE` and `PL`) causes false matches because multiple city pairs exist between the same two countries. 
+
+This multi-criterion lookup resolves the ambiguity by concatenating specific origin and destination cities:
 ```excel
 =XLOOKUP("Mannheim" & "|" & "Wrocław", Rate_Matrix!B:B & "|" & Rate_Matrix!D:D, Rate_Matrix!J:J, "Rate Not Found")
 ```
