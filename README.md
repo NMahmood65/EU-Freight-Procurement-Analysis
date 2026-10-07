@@ -30,6 +30,24 @@ When primary hauliers lack capacity or decline bookings, loads fall into seconda
 
 The workbook is structured into four interconnected worksheets:
 
+* `Executive_Summary`: Senior leadership dashboard featuring high-level KPI cards, haulier allocation and spend tables, strategic procurement notes, and an embedded spend distribution chart.
+* `Daily_Shipment_Log`: Operational ledger tracking 3,500 individual journeys across Europe, detailing cargo specs, carrier assignments, invoiced costs, on-time delivery flags, and route disruption notices.
+* `Rate_Matrix`: Master pricing database covering 90 distinct origin-destination corridors, benchmarking negotiated primary contract rates against European spot market indices and secondary fallback rates.
+* `Carrier_Master`: Haulier directory profiling 8 transport partners with metrics on fleet size, risk scores (rated 1 to 5), ESG carbon ratings, and automated contingency allocation statuses.
+
+### Folder & File Hierarchy
+
+EU-Freight-Procurement-Analysis/
+├── Executive_Summary    # KPI scorecards, carrier allocation matrix, strategy notes, spend chart
+├── Daily_Shipment_Log   # 3,500 operational shipments, costs, service performance, disruption tags
+├── Rate_Matrix          # 90 cross-border routes, contract rates vs spot benchmarks, fallback deltas
+└── Carrier_Master       # Profiles for 8 hauliers, fleet capacity, risk ratings (1-5), status logic
+
+
+## Project Architecture
+
+The workbook is structured into four interconnected worksheets:
+
 ## Step-by-Step Implementation
 
 ### Step 1: Data Architecture & Network Design
