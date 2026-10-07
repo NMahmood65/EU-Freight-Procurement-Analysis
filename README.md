@@ -69,17 +69,38 @@ The workbook is structured into four interconnected worksheets:
 Enriched raw operational logs with real haulier names:
 ```excel
 =XLOOKUP(G2, Carrier_Master!A:A, Carrier_Master!B:B, "Unknown Carrier")
-=XLOOKUP("Mannheim" & "|" & "Wrocław", Rate_Matrix!B:B & "|" & Rate_Matrix!D:D, Rate_Matrix!J:J, "Rate Not Found")
+```
 
+### 2. Multi-Criterion Lookups
+Eliminated route ambiguity when searching by city pairs rather than Lane IDs:
+```excel
+=XLOOKUP("Mannheim" & "|" & "Wrocław", Rate_Matrix!B:B & "|" & Rate_Matrix!D:D, Rate_Matrix!J:J, "Rate Not Found")
+```
+
+### 3. Haulier Volume & Spend Aggregation (`COUNTIF` & `SUMIF`)
+Calculated total loads and total spend per haulier on the executive board:
+```excel
 =COUNTIF(Daily_Shipment_Log!G:G, "CAR-01")
 =SUMIF(Daily_Shipment_Log!G:G, "CAR-01", Daily_Shipment_Log!K:K)
+```
+
+### 4. Haulier Reliability Tracking (`AVERAGEIF`)
+Calculated the on-time delivery percentage per haulier:
+```excel
 =AVERAGEIF(Daily_Shipment_Log!G:G, "CAR-01", Daily_Shipment_Log!M:M)
+```
 
+### 5. Alpha-Numeric Record Counting (`COUNTA`)
+Accurately counted 3,500 text-formatted shipment references (`SHP-20260001`):
+```excel
 =COUNTA(Daily_Shipment_Log!A:A)-1
+```
 
+### 6. Automated Risk Decision Rules (Nested `IF`)
+Categorised hauliers into core, watchlist, or high-risk allocations based on risk ratings:
+```excel
 =IF(E2>=4, "REQUIRES BACKUP - HIGH RISK", IF(E2>=3, "WATCHLIST", "CORE ALLOCATION"))
-
-
+```
 
 
 
