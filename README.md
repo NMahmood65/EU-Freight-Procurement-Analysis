@@ -2,7 +2,7 @@
 
 A hands-on transport procurement and cost analysis project evaluating **3,500 full-truckload (FTL) journeys** across 90 European trade corridors.
 
-![European Road Freight Dashboard](dashboard_preview.png)
+![European Road Freight Dashboard](excel_dashboard.png)
 
 ---
 
