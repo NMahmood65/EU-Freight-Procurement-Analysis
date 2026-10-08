@@ -25,7 +25,7 @@ I wanted to dig into this commercial puzzle:
 
 Analyzing €4.04M in quarterly haulage spend uncovered a stark divide in operational performance:
 
-![Haulier Performance Chart](carrier_performance_review.png)
+![Haulier Performance Chart](Haulier-Spend-vs-Reliability-Chart.png)
 
 ### 1. Primary Contracts Win, But Fallbacks Are Punishing
 * **Negotiated primary loads** delivered **94.1% punctuality** and generated **€153,800 in genuine savings** against open market rates.
