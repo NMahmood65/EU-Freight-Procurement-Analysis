@@ -54,3 +54,8 @@ This project was built entirely in Excel to reflect everyday freight operations:
 * **Two-Way XLOOKUPs**: Resolving route lookups without ambiguity:
   ```excel
   =XLOOKUP("Mannheim" & "|" & "Wrocław", Rate_Matrix!B:B & "|" & Rate_Matrix!D:D, Rate_Matrix!J:J, "Rate Not Found")
+* **Dynamic Surcharges (BAF)**: Factoring European diesel indexation (8.5%) into net transport calculations.
+* **Dynamic Performance Aggregations**: Linking 3,500 raw shipment lines into an executive scorecard using `SUMIF`, `COUNTIF`, and `AVERAGEIF`.
+* **Automated Risk Flags**: Triggering secondary carrier workflows whenever risk scores reached 4 or 5:
+  ```excel
+  =IF(E2>=4, "REQUIRES BACKUP - HIGH RISK", IF(E2>=3, "WATCHLIST", "CORE ALLOCATION"))
