@@ -59,3 +59,12 @@ This project was built entirely in Excel to reflect everyday freight operations:
 * **Automated Risk Flags**: Triggering secondary carrier workflows whenever risk scores reached 4 or 5:
   ```excel
   =IF(E2>=4, "REQUIRES BACKUP - HIGH RISK", IF(E2>=3, "WATCHLIST", "CORE ALLOCATION"))
+
+---
+
+## Analytical Workflow & AI Transparency
+
+To build this model, I used generative AI as a technical partner:
+* **Market Context & Corridor Design**: I used LLMs to brainstorm realistic European FTL corridors, standard lead times, and authentic logistics constraints (such as BAF surcharges and Route Advisory disruptions).
+* **Formula Architecture & Data Generation**: I generated the synthetic 3,500-shipment dataset via Python, structuring authentic variance between contract rates and European spot indices.
+* **Human Analysis & Synthesis**: I performed the core analytical review, built the KPI dashboard logic, verified formula edge cases (such as text-counting quirks with `COUNTA`), and formulated the commercial procurement strategy.
