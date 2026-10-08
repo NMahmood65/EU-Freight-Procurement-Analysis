@@ -1,125 +1,56 @@
-# Pan-European Road Freight Procurement & Network Analysis
+# European Road Freight Procurement Analysis 🚚
 
-An end-to-end commercial freight procurement project simulating the day-to-day operations of a lead logistics partner (LLP) managing European full truckload (FTL) haulage. 
+A hands-on transport procurement and cost analysis project evaluating **3,500 full-truckload (FTL) journeys** across 90 European trade corridors.
 
-This project analyses haulage rates, monitors haulier punctuality, and flags network risks across 90 cross-border corridors in Europe.
+![European Road Freight Dashboard](dashboard_preview.png)
+
+---
+
+## Why This Project?
+
+In European road logistics, the cheapest price on paper is rarely the cheapest price in practice.
+
+When you manage freight contracts, you negotiate volume rates with core hauliers. But European road transport is volatile: borders jam at Dover, Alpine passes close in winter, and drivers run short. When your primary haulier turns down a load, transport planners scramble to find a truck on the open market.
+
+**That is where profit margins quietly bleed out.** 
+
+I wanted to dig into this commercial puzzle:
+* How much money are we actually saving on our negotiated contracts?
+* What does it cost the business every time a primary route fails and we fall back to secondary or emergency spot carriers?
+* Which hauliers are quietly dragging down our customer delivery promises?
 
 ---
 
-## Business Problem & Context
+## What the Data Revealed
 
-Managing transport across European trade lanes involves balancing three core factors:
-1. **Cost Control**: Keeping line-haul rates and fuel surcharges (BAF) competitive against open market spot rates.
-2. **Reliability**: Ensuring hauliers consistently meet strict on-time delivery (OTD) customer service agreements (target $\ge 94\%$).
-3. **Operational Resilience**: Having reliable backup hauliers ready when routes face cross-border friction, driver shortages, or severe weather.
+Analyzing €4.04M in quarterly haulage spend uncovered a stark divide in operational performance:
 
-When primary hauliers lack capacity or decline bookings, loads fall into secondary or emergency spot markets. This project evaluates a quarterly network of 3,500 shipments to uncover where fallback routing eroded profit margins and where procurement should intervene.
+![Haulier Performance Chart](carrier_performance_review.png)
 
-## Key Findings at a Glance
+### 1. Primary Contracts Win, But Fallbacks Are Punishing
+* **Negotiated primary loads** delivered **94.1% punctuality** and generated **€153,800 in genuine savings** against open market rates.
+* **Fallback & spot bookings (637 loads)** eroded **€87,000** of those savings. On-time delivery plummeted to **86.5%**, and we paid an average **15% to 25% premium** per run.
 
-* **Total Freight Spend**: €4,044,868 across 3,500 completed shipments.
-* **Network Punctuality (OTD)**: 92.8% (slightly below the 94.0% SLA target).
-* **Net Cost Avoidance**: +€66,811 saved compared to open market spot benchmarks.
-* **The Fallback Cost Penalty**:
-  * **Primary Contracted Loads**: 94.1% on-time | €153,831 saved vs open market rates.
-  * **Contingency / Backup Loads**: 87.1% on-time | -€52,939 cost penalty.
-  * **Spot Market Emergency Loads**: 86.5% on-time | -€34,080 cost penalty.
-* **High-Risk Exposure**: Two underperforming hauliers (`CAR-04 Alps Cargo Line` and `CAR-07 Iberia-Gaul Intermodal`) accounted for €538,000 in spend with punctuality hovering near 85%, driving down overall network reliability.
-
-## Project Architecture
-
-The workbook is structured into four interconnected worksheets:
-
-* `Executive_Summary`: Senior leadership dashboard featuring high-level KPI cards, haulier allocation and spend tables, strategic procurement notes, and an embedded spend distribution chart.
-* `Daily_Shipment_Log`: Operational ledger tracking 3,500 individual journeys across Europe, detailing cargo specs, carrier assignments, invoiced costs, on-time delivery flags, and route disruption notices.
-* `Rate_Matrix`: Master pricing database covering 90 distinct origin-destination corridors, benchmarking negotiated primary contract rates against European spot market indices and secondary fallback rates.
-* `Carrier_Master`: Haulier directory profiling 8 transport partners with metrics on fleet size, risk scores (rated 1 to 5), ESG carbon ratings, and automated contingency allocation statuses.
-
-### Folder & File Hierarchy
-
-```text
-EU-Freight-Procurement-Analysis/
-├── Executive_Summary    # KPI scorecards, carrier allocation matrix, strategy notes, spend chart
-├── Daily_Shipment_Log   # 3,500 operational shipments, costs, service performance, disruption tags
-├── Rate_Matrix          # 90 cross-border routes, contract rates vs spot benchmarks, fallback deltas
-└── Carrier_Master       # Profiles for 8 hauliers, fleet capacity, risk ratings (1-5), status logic
-```
-
-
-## Project Architecture
-
-The workbook is structured into four interconnected worksheets:
-
-## Step-by-Step Implementation
-
-### Step 1: Data Architecture & Network Design
-* Designed 90 authentic European freight routes connecting core manufacturing hubs (e.g., Düsseldorf, Venlo, Antwerp, Lille, Lyon, Poznań, Wrocław, Verona, and Milton Keynes).
-* Assigned realistic transit distances (200 km to 1,050 km) and equipment types (13.6 m standard curtainsiders, box trailers, and mega trailers).
-* Structured standard rates alongside an 8.5% Bunker Adjustment Factor (BAF fuel surcharge) to reflect industry rate indexation.
-
-### Step 2: Rate Benchmarking & Contingency Rules
-* Calculated contract rate deltas against European spot market indices:
-  $$\text{Variance \%} = \frac{\text{Spot Benchmark} - \text{Contract Rate}}{\text{Spot Benchmark}}$$
-* Built dynamic switching premium calculations to quantify the cost impact of falling back to secondary hauliers (typically an 8% to 22% rate increase).
-* Implemented operational Route Advisory Status (RAS) triggers simulating Alpine weather, ferry cancellations, and Channel crossing delays.
-
-## Core Excel Formulas Demonstrated
-
-### 1. Dynamic Carrier Names (`XLOOKUP`)
-Enriched raw operational logs with real haulier names:
-```excel
-=XLOOKUP(G2, Carrier_Master!A:A, Carrier_Master!B:B, "Unknown Carrier")
-```
-
-### 2. Multi-Criterion Lookups (Handling Non-Unique Fields)
-While `Lane ID` is the unique primary key across the network, operational inquiries often arrive as separate Origin and Destination fields rather than code identifiers. Searching solely by country codes (`DE` and `PL`) causes false matches because multiple city pairs exist between the same two countries. 
-
-This multi-criterion lookup resolves the ambiguity by concatenating specific origin and destination cities:
-```excel
-=XLOOKUP("Mannheim" & "|" & "Wrocław", Rate_Matrix!B:B & "|" & Rate_Matrix!D:D, Rate_Matrix!J:J, "Rate Not Found")
-```
-
-### 3. Haulier Volume & Spend Aggregation (`COUNTIF` & `SUMIF`)
-Calculated total loads and total spend per haulier on the executive board:
-```excel
-=COUNTIF(Daily_Shipment_Log!G:G, "CAR-01")
-=SUMIF(Daily_Shipment_Log!G:G, "CAR-01", Daily_Shipment_Log!K:K)
-```
-
-### 4. Haulier Reliability Tracking (`AVERAGEIF`)
-Calculated the on-time delivery percentage per haulier:
-```excel
-=AVERAGEIF(Daily_Shipment_Log!G:G, "CAR-01", Daily_Shipment_Log!M:M)
-```
-
-### 5. Alpha-Numeric Record Counting (`COUNTA`)
-Accurately counted 3,500 text-formatted shipment references (`SHP-20260001`):
-```excel
-=COUNTA(Daily_Shipment_Log!A:A)-1
-```
-
-### 6. Automated Risk Decision Rules (Nested `IF`)
-Categorised hauliers into core, watchlist, or high-risk allocations based on risk ratings:
-```excel
-=IF(E2>=4, "REQUIRES BACKUP - HIGH RISK", IF(E2>=3, "WATCHLIST", "CORE ALLOCATION"))
-```
-
----
+### 2. Two Hauliers Accounted for Most of the Friction
+* `CAR-04 (Alps Cargo Line)` and `CAR-07 (Iberia-Gaul Intermodal)` soaked up over **€538,000** in freight spend.
+* Yet their punctuality hovered near **85%**. By failing to show up on time, they single-handedly dragged the entire network under our 94% customer SLA benchmark.
 
 ---
 
 ## Procurement Recommendations
 
-1. **Cap Allocations to High-Risk Hauliers**: Freeze discretionary allocations to `CAR-04` and `CAR-07` due to sub-90% punctuality and elevated risk ratings.
-2. **Re-Tender Backup Capacity**: Launch a targeted mini-tender across vulnerable corridors (particularly DACH-to-Italy and cross-channel lanes) to secure reliable fallback hauliers at lower premium deltas.
-3. **Expand Core Carrier Commitments**: Deepen volume commitments with top performers (`CAR-08 EuroRoute Expedited` and `CAR-05 Silesia Haulage`) to raise contract coverage from 82% to 90%, avoiding €35,000–€45,000 in quarterly ad-hoc surcharges.
+If I were presenting these findings to the European procurement committee on Monday morning, here is the action plan:
+
+1. **Cap Allocations to High-Risk Carriers**: Immediately freeze discretionary load allocation to Alps Cargo Line and Iberia-Gaul on Southern European corridors until reliability recovers.
+2. **Launch a Mini-Tender for Backup Capacity**: Run an ad-hoc tender across vulnerable Alpine and cross-channel lanes to secure reliable secondary partners with pre-negotiated fallback rates.
+3. **Lock In Core Capacity**: Re-negotiate guaranteed trailer capacity with our top performers (`EuroRoute Expedited` and `Silesia Haulage`), increasing contracted coverage from 82% to 90% to avoid €35k+ in quarterly emergency premiums.
 
 ---
 
-## How to Review This Project
+## Excel Modeling Highlights
 
-1. Open `EU-Freight-Procurement-Analysis.xlsx`.
-2. Inspect the **Executive_Summary** tab for key performance cards and the carrier allocation overview.
-3. Review the **Rate_Matrix** tab to examine route pricing and market spot variance.
-4. Check the **Daily_Shipment_Log** to view individual shipments and testing formulas.
+This project was built entirely in Excel to reflect everyday freight operations:
 
+* **Two-Way XLOOKUPs**: Resolving route lookups without ambiguity:
+  ```excel
+  =XLOOKUP("Mannheim" & "|" & "Wrocław", Rate_Matrix!B:B & "|" & Rate_Matrix!D:D, Rate_Matrix!J:J, "Rate Not Found")
